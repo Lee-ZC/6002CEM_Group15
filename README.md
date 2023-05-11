@@ -1,6 +1,8 @@
 # trip_now
 
-A new Flutter project.
+The travel_now application is a versatile platform designed to simplify the process of planning and booking travel arrangements. . It offers a wide range of services including......Whether it's for business or leisure, this application serves as a comprehensive tool, making travel planning more accessible and efficient for users.
+
+
 
 ## Getting Started
 
@@ -11,6 +13,4 @@ A few resources to get you started if this is your first Flutter project:
 - [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
 - [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
