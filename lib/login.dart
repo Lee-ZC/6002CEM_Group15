@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -8,6 +9,9 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,20 +21,22 @@ class _LoginState extends State<Login> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              const Padding(
-                padding: EdgeInsets.all(15),
+              Padding(
+                padding: const EdgeInsets.all(15),
                 child: TextField(
-                  decoration: InputDecoration(
+                  controller: emailController,
+                  decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: 'Email',
                       hintText: 'Enter valid email.'),
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.all(15),
+              Padding(
+                padding: const EdgeInsets.all(15),
                 child: TextField(
+                  controller: passwordController,
                   obscureText: true,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: 'Password',
                       hintText: 'Enter the password.'),
@@ -51,14 +57,19 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                   onPressed: () {
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content: Text('Login'),
-                    ));
+                    login();
                   },
                 ),
               ),
             ],
           ),
         ));
+  }
+
+  Future login() async {
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: emailController.text.trim(),
+      password: passwordController.text.trim(),
+    );
   }
 }
