@@ -10,6 +10,8 @@ Future main() async {
   runApp(const MyApp());
 }
 
+final navigatorKey=GlobalKey<NavigatorState>();
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -17,6 +19,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey:navigatorKey,
       title: 'Trip Now',
       theme: ThemeData(
         primarySwatch: Colors.purple,
@@ -38,9 +41,9 @@ class MainPage extends StatelessWidget {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context,snapshot){
           if(snapshot.hasData){
-            return HomePage();
+            return const HomePage();
           }else{
-            return Login();
+            return const Login();
           }
         }
       ),

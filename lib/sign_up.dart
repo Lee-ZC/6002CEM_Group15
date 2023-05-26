@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:trip_now/main.dart';
-import 'package:trip_now/sign_up.dart';
 
-class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
+class SignUp extends StatefulWidget {
+  const SignUp({Key? key}) : super(key: key);
 
   @override
-  State<Login> createState() => _LoginState();
+  State<SignUp> createState() => _SignUpState();
 }
 
-class _LoginState extends State<Login> {
+class _SignUpState extends State<SignUp> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -52,57 +51,32 @@ class _LoginState extends State<Login> {
                 height: 50,
                 child: ElevatedButton(
                   child: const Text(
-                    "Login",
+                    "Sign up",
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   onPressed: () {
-                    login();
+                    signUp();
                   },
                 ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Text(
-                'Don' 't Have Account?',
-                style: TextStyle(
-                  fontSize: 20,
-                ),
-              ),
-              InkWell(
-                  child: Text(
-                'Register Now!',
-                style: TextStyle(
-                  decoration: TextDecoration.underline,
-                  color: Colors.blue,
-                  fontSize: 20,
-                ),
-              ),
-                onTap: (){Navigator.push(context, MaterialPageRoute(builder: (child)=>SignUp(),));},
               ),
             ],
           ),
         ));
   }
 
-  Future login() async {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => const Center(
-        child: CircularProgressIndicator(),
-      ),
-    );
+  Future signUp() async {
+    showDialog(context: context,barrierDismissible: false, builder: (context)=>const Center(child: CircularProgressIndicator(),),);
 
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
-    } on FirebaseAuthException catch (e) {
+    }
+    on FirebaseAuthException catch (e) {
       print(e);
     }
 
