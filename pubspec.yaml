@@ -39,11 +39,10 @@ dependencies:
   firebase_auth: ^4.6.1
   cloud_firestore: ^4.7.1
   firebase_core: ^2.13.0
+  email_validator: ^2.0.1
 
 
-  #Firebase Database
-  cloud_firestore: ^3.1.5
-  firebase_core_platform_interface: 4.5.1
+  firebase_core_platform_interface: 4.8.0
 
 
 
