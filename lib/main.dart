@@ -21,6 +21,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       navigatorKey:navigatorKey,
       title: 'Trip Now',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.purple,
       ),
