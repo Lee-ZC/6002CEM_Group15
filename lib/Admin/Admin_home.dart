@@ -5,11 +5,11 @@ import 'package:trip_now/login.dart';
 
 
 
-void main(List<String> args) {
-  runApp(new MaterialApp(
-    home: MyAdminApp(),
-  ));
-}
+// void main(List<String> args) {
+//   runApp(new MaterialApp(
+//     home: MyAdminApp(),
+//   ));
+// }
 
 
 class MyAdminApp extends StatefulWidget {
@@ -26,7 +26,7 @@ class _MyAdminAppState extends State<MyAdminApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: new AppBar(
+      appBar:  AppBar(
         title: Text("Admin Dashboard"),
         backgroundColor: Colors.purple[400],
       ),
@@ -38,7 +38,7 @@ class _MyAdminAppState extends State<MyAdminApp> {
           children: <Widget>[
             Card(
               shape: RoundedRectangleBorder(
-                side: BorderSide(
+                side: const BorderSide(
                   color: Colors.white,
                 ),
                 borderRadius: BorderRadius.circular(20.0),
