@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:trip_now/main.dart';
 import 'package:trip_now/sign_up.dart';
 
+import 'Admin/Admin_home.dart';
+
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
 
@@ -94,7 +96,7 @@ class _LoginState extends State<Login> {
                       ),
                     ),
                     const SizedBox(
-                      height: 20,
+                      height: 10,
                     ),
                     SizedBox(
                       width: 100,
@@ -123,7 +125,36 @@ class _LoginState extends State<Login> {
                       ),
                     ),
                     const SizedBox(
+                      height: 10,
+                    ),
+                    SizedBox(
+                      width: 100,
+                      height: 50,
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0),
+                            ),
+                          ),
+                        ),
+                        child: const Text(
+                          "Admin",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyAdminApp()));
+                        },
+                      ),
+                    ),
+                    const SizedBox(
                       height: 20,
+                    ),
+                    const SizedBox(
+                      height: 5,
                     ),
                     const Text(
                       'Don\'t Have Account Yet?',
