@@ -22,11 +22,11 @@ class _HomePageState extends State<HomePage> {
 
   List<HotelModel> hotelList = [];
 
-
   CollectionReference ref = FirebaseFirestore.instance.collection('hotels');
 
+
   navigateToDetail(DocumentSnapshot post){
-  // Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailPage(post:post)));
+  Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailPage(post:post,)));
   }
 
 
@@ -34,7 +34,6 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
 
     final user = FirebaseAuth.instance.currentUser!;
-
 
     return Scaffold(
 
