@@ -17,6 +17,7 @@ class _LoginState extends State<Login> {
   TextEditingController passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,131 +29,80 @@ class _LoginState extends State<Login> {
         body: SingleChildScrollView(
           child: Form(
             key: _formKey,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20,),
+            child: Center(
               child: Expanded(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Image.network(
-                      'https://picsum.photos/250?image=9',
-                      width: 180,
-                      height: 180,
+                    Container(
+                      padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+                      child: CircleAvatar(backgroundImage: AssetImage('assets/images/logo.png',),radius: 80.0,),
                     ),
-                    SizedBox(height: 20,),
-                    Padding(
-                      padding: const EdgeInsets.all(15),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [const BoxShadow(color: Colors.black12, blurRadius: 5)],
-                        ),
-                        child: TextFormField(
-                          validator: (value){
-                            final bool emailValid =
-                            RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                                .hasMatch(value!);
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter some text';
-                            }else if(!emailValid){
-                              return 'Please enter a valid email';
-                            }
-                            return null;
-                          },
-                          controller: emailController,
-                          decoration: const InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: 'Email',
-                              hintText: 'Enter valid email.'),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(15),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [const BoxShadow(color: Colors.black12, blurRadius: 5)],
-                        ),
-                        child: TextFormField(
-                          validator: (value){
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter some text';
-                            }else if(value.length<6){
-                              return 'Password must be more than 6 digits.';
-                            }
-                            return null;
-                          },
-                          controller: passwordController,
-                          obscureText: true,
-                          decoration: const InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: 'Password',
-                              hintText: 'Enter the password.'),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    SizedBox(
-                      width: 100,
-                      height: 50,
-                      child: ElevatedButton(
-                        style: ButtonStyle(
-                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18.0),
-                            ),
-                          ),
-                        ),
-                        child: const Text(
-                          "LOGIN",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        onPressed: () {
-                          if(_formKey.currentState!.validate()){
-                            login();
+                    Container(
+                      padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+                      child: TextFormField(
+                        validator: (value) {
+                          final bool emailValid = RegExp(
+                                  r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                              .hasMatch(value!);
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter some text';
+                          } else if (!emailValid) {
+                            return 'Please enter a valid email';
                           }
-
+                          return null;
                         },
+                        controller: emailController,
+                        decoration: InputDecoration(
+
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(90.0),
+                            ),
+                            labelText: 'Email',
+                            hintText: 'Enter valid email.'),
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+                      child: TextFormField(
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter some text';
+                          } else if (value.length < 6) {
+                            return 'Password must be more than 6 digits.';
+                          }
+                          return null;
+                        },
+                        controller: passwordController,
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(90.0),
+                          ),
+                          labelText: 'Password',
+                        ),
                       ),
                     ),
                     const SizedBox(
                       height: 10,
                     ),
-                    SizedBox(
-                      width: 100,
-                      height: 50,
-                      child: ElevatedButton(
-                        style: ButtonStyle(
-                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18.0),
-                            ),
+                    Container(
+                        height: 90,
+                        width: 180,
+                        padding: const EdgeInsets.all(20),
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            minimumSize: const Size.fromHeight(50),
                           ),
-                        ),
-                        child: const Text(
-                          "Admin",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyAdminApp()));
-                        },
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
+                          child: const Text('Login'),
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              login();
+                            }
+                          },
+                        )),
+
                     const SizedBox(
                       height: 5,
                     ),
@@ -163,17 +113,37 @@ class _LoginState extends State<Login> {
                       ),
                     ),
                     InkWell(
-                        child: const Text(
-                          'Register Now!',
-                          style: TextStyle(
-                            decoration: TextDecoration.underline,
-                            color: Colors.blue,
-                            fontSize: 16,
-                          ),
+                      child: const Text(
+                        'Register Now!',
+                        style: TextStyle(
+                          decoration: TextDecoration.underline,
+                          color: Colors.blue,
+                          fontSize: 16,
                         ),
-                      onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (child)=>const SignUp(),),);
-                          },
+                      ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (child) => const SignUp(),
+                          ),
+                        );
+                      },
+                    ),
+
+                    Container(
+                      height: 80,
+                      width: 150,
+                      padding: const EdgeInsets.all(20),
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            minimumSize: const Size.fromHeight(50),
+                          ),
+                          child: const Text('Admin'),
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => MyAdminApp()));
+                          }),
                     ),
                   ],
                 ),
@@ -198,9 +168,16 @@ class _LoginState extends State<Login> {
         password: passwordController.text.trim(),
       );
     } on FirebaseAuthException catch (e) {
-      print(e);
+      final snackBar = SnackBar(
+        content: const Text('Wrong Credential'),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
 
-    navigatorKey.currentState!.popUntil((route) => route.isFirst);
+
+      navigatorKey.currentState!.popUntil((route) => route.isFirst);
+
+
+
   }
 }

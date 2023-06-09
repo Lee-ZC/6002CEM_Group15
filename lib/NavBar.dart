@@ -31,68 +31,95 @@ class NBPage extends StatefulWidget {
 }
 
 class _NBState extends State<NBPage> {
-  final user = FirebaseAuth.instance.currentUser!;
+  var user = FirebaseAuth.instance.currentUser!;
+
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.topLeft,
-      widthFactor: 0.7,
-      child: Drawer(
-        child: ListView(
-          // Remove padding
-          padding: EdgeInsets.zero,
-          children: [
-            UserAccountsDrawerHeader(
-              accountName: Text(user.displayName.toString()),
-              accountEmail: Text(user.email!),
-              // currentAccountPicture: CircleAvatar(
-              //   child: ClipOval(
-              //     child: Image.network(
-              //       getUserInfo().getUImg().toString(),
-              //       fit: BoxFit.cover,
-              //       width: 90,
-              //       height: 90,
-              //     ),
-              //   ),
-              // ),
-              decoration: BoxDecoration(
-                color: Colors.blue,
-                image: DecorationImage(
-                    fit: BoxFit.fill,
-                    image: NetworkImage(
-                        'https://oflutter.com/wp-content/uploads/2021/02/profile-bg3.jpg')),
-              ),
+    var name=null;
+    CollectionReference collection = FirebaseFirestore.instance.collection('Users') as CollectionReference<Object?>;
+
+    return     FutureBuilder<DocumentSnapshot>(
+      //Fetching data from the documentId specified of the student
+      future: collection.doc(FirebaseAuth.instance.currentUser!.uid ).get(),
+      builder:
+          (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        //Error Handling conditions
+        if (snapshot.hasError) {
+          print("Something went wrong");
+        }
+
+        if (snapshot.hasData && !snapshot.data!.exists) {
+          print("Document does not exist");
+        }
+
+        //Data is output to the user
+        if (snapshot.connectionState == ConnectionState.done) {
+          Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
+          name=data['name'];
+        }
+        return Align(
+          alignment: Alignment.topLeft,
+          widthFactor: 0.7,
+          child: Drawer(
+            child: ListView(
+              // Remove padding
+              padding: EdgeInsets.zero,
+              children: [
+                UserAccountsDrawerHeader(
+                  accountName: Text(name),
+                  accountEmail: Text(user.email!),
+                  // currentAccountPicture: CircleAvatar(
+                  //   child: ClipOval(
+                  //     child: Image.network(
+                  //       getUserInfo().getUImg().toString(),
+                  //       fit: BoxFit.cover,
+                  //       width: 90,
+                  //       height: 90,
+                  //     ),
+                  //   ),
+                  // ),
+                  decoration: BoxDecoration(
+                    color: Colors.blue,
+                    image: DecorationImage(
+                        fit: BoxFit.fill,
+                        image: NetworkImage(
+                            'https://oflutter.com/wp-content/uploads/2021/02/profile-bg3.jpg')),
+                  ),
+                ),
+                ListTile(
+                  leading: Icon(Icons.explore),
+                  title: Text('Explore'),
+                  onTap: ()=>Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=>HomePage())),
+                ),
+                ListTile(
+                  leading: Icon(Icons.favorite),
+                  title: Text('WishList'),
+                  onTap: ()=>Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=>wishlist_page())),
+                ),
+                ListTile(
+                  leading: Icon(Icons.chat),
+                  title: Text('Customer Support'),
+                  onTap: () => Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=>chat_page())),
+                ),
+                ListTile(
+                  leading: Icon(Icons.person),
+                  title: Text('Profile'),
+                  onTap: () => Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=>profile_page())),
+                ),
+                Divider(),
+                // ListTile(
+                //   title: Text('Settings'),
+                //   leading: Icon(Icons.settings),
+                //   onTap: () => Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=>Setting())),
+                // ),
+              ],
             ),
-            ListTile(
-              leading: Icon(Icons.explore),
-              title: Text('Explore'),
-              onTap: ()=>Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=>HomePage())),
-            ),
-            ListTile(
-              leading: Icon(Icons.favorite),
-              title: Text('WishList'),
-              onTap: ()=>Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=>wishlist_page())),
-            ),
-            ListTile(
-              leading: Icon(Icons.chat),
-              title: Text('Customer Support'),
-              onTap: () => Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=>chat_page())),
-            ),
-            ListTile(
-              leading: Icon(Icons.person),
-              title: Text('Profile'),
-              onTap: () => Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=>profile_page())),
-            ),
-            Divider(),
-            // ListTile(
-            //   title: Text('Settings'),
-            //   leading: Icon(Icons.settings),
-            //   onTap: () => Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=>Setting())),
-            // ),
-          ],
-        ),
-      ),
+          ),
+        );;
+      },
+
     );
+
   }
 }
