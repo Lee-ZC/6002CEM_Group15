@@ -236,7 +236,7 @@ class _SignUpState extends State<SignUp> {
       }).catchError((error) => print("Failed to add user: $error"));
     } on FirebaseAuthException catch (e) {
       final snackBar = SnackBar(
-        content: const Text('Something error.'),
+        content: const Text('Some errors occured, try it later.'),
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
