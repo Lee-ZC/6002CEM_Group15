@@ -20,7 +20,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-  List<HotelModel> hotelList = [];
+  //List<HotelModel> hotelList = [];
 
   CollectionReference ref = FirebaseFirestore.instance.collection('hotels');
 
