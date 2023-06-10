@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../api/notification_api.dart';
+
 class DetailPage extends StatefulWidget {
   //const DetailPage({Key? key}) : super(key: key);
 
@@ -177,7 +179,8 @@ class _DetailPageState extends State<DetailPage> {
                                                             phoneController
                                                                 .text,
                                                         "Date": dateinput.text,
-                                                        "Hotel name": widget.post["name"]
+                                                        "Hotel name": widget.post["name"],
+                                                        "Hotel Image": widget.post["ImageUrl"]
                                                       };
                                                       collectionReference
                                                           .doc(user.uid)
@@ -187,6 +190,13 @@ class _DetailPageState extends State<DetailPage> {
                                                           .whenComplete(() =>
                                                               Navigator.pop(
                                                                   context));
+
+                                                      // NotificationApi.showNotification(
+                                                      //     title: "Trip_now",
+                                                      //     body: 'You have book ' + widget.post["name"],
+                                                      //     payload: 'asda',);
+
+
                                                     },
                                                     child: Text(
                                                       "Book Now",

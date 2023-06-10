@@ -42,6 +42,7 @@ dependencies:
   cloud_firestore: ^4.7.1
   firebase_core: ^2.13.0
   email_validator: ^2.0.1
+#  flutter_local_notifications: ^7.0.0
 
 
   firebase_core_platform_interface: 4.8.0
