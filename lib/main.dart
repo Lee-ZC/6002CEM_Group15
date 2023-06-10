@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:trip_now/botton_Nav.dart';
 import 'package:trip_now/Pages/home.dart';
 import 'package:trip_now/login.dart';
 import 'package:firebase_core/firebase_core.dart';
