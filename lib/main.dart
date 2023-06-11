@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:trip_now/Pages/onboardingPage.dart';
 import 'package:trip_now/botton_Nav.dart';
 import 'package:trip_now/Pages/home.dart';
 import 'package:trip_now/login.dart';
@@ -33,9 +36,35 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MainPage extends StatelessWidget {
+class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
 
+  @override
+  State<MainPage> createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
+  @override
+  void initState() {
+    super.initState();
+    Timer(Duration(seconds: 3),
+            ()=>Navigator.pushReplacement(context,
+            MaterialPageRoute(builder:
+                (context) =>
+                SecondScreen()
+            )
+        )
+    );
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        color: Colors.white,
+        child:Image.asset("assets/images/logo.png"),
+    );
+  }
+}
+class SecondScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,7 +76,7 @@ class MainPage extends StatelessWidget {
           if(snapshot.hasData){
             return const HomePage();
           }else{
-            return const Login();
+            return const OnBoardingPage();
           }
         }
       ),
