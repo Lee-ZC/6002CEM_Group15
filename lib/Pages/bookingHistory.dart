@@ -69,7 +69,7 @@ class _bookingHistoryState extends State<bookingHistory> {
                   );
                 });
           } else
-            return Text('No data available !',style: TextStyle(color: Colors.black,fontSize: 20,fontWeight: FontWeight.bold));
+             return Center( child: Text('No data available !',style: TextStyle(color: Colors.black,fontSize: 20,fontWeight: FontWeight.bold)));
         },
       ),
 
