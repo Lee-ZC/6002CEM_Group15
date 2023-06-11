@@ -51,6 +51,28 @@ class _DetailPageState extends State<DetailPage> {
     );
   }
 
+
+  Future addToFavourite() async {
+
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+    var currentUser = _auth.currentUser;
+
+    CollectionReference _collectionRef =
+    FirebaseFirestore.instance.collection("user-favourite-hotels");
+
+    return _collectionRef
+        .doc(currentUser!.uid)
+        .collection("hotels")
+        .doc()
+        .set({
+        "Hotel name": widget.post["name"],
+      "Price": widget.post["Price"],
+      "ImageUrl": widget.post["ImageUrl"],
+    }).then((value) => print("Added To favourite"));
+
+
+  }
+
   @override
   Widget build(BuildContext context) {
     final start = dateRange.start;
@@ -77,15 +99,29 @@ class _DetailPageState extends State<DetailPage> {
 
                     ButtonBar(
                       children: <Widget>[
-                        ElevatedButton(
-                          child: Icon(
-                            Icons.favorite_outlined,
-                            // color: Colors.pink,
-                            size: 24.0,
-                            semanticLabel:
-                                'Text to announce in accessibility modes',
-                          ),
-                          onPressed: () {},
+                        StreamBuilder(
+                          stream: FirebaseFirestore.instance.collection("user-favourite-hotels").doc(FirebaseAuth.instance.currentUser?.uid)
+                            .collection("hotels").where("Hotel name",isEqualTo:widget.post["name"]).snapshots(),
+                          builder: ( BuildContext context, AsyncSnapshot snapshot) {
+                            if(snapshot.data == null){
+                              return Text("");
+                            }
+                            return IconButton(
+
+                              onPressed: () {snapshot.data.docs.length==0? addToFavourite():print("Already Added");},
+
+                              icon: snapshot.data.docs.length==0? Icon(
+                                Icons.favorite_outline,
+                                color: Colors.red,
+                                size: 24.0,
+                              ):Icon(
+                                Icons.favorite,
+                                color: Colors.red,
+                                size: 24.0,
+                              ),
+
+                            );
+                          }
                         ),
                         ElevatedButton(
                           child: Text("Book Now"),
