@@ -66,6 +66,8 @@ class _wishlist_pageState extends State<wishlist_page> {
                         )
                     ),
                   );
+
+
                 });
           } else
             return Center( child: Text('No data available !',style: TextStyle(color: Colors.black,fontSize: 20,fontWeight: FontWeight.bold)));
