@@ -88,12 +88,11 @@ class _LoginState extends State<Login> {
                       height: 10,
                     ),
                     Container(
-                        height: 90,
-                        width: 180,
                         padding: const EdgeInsets.all(20),
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            minimumSize: const Size.fromHeight(50),
+                            backgroundColor: Colors.blueAccent,
+                            fixedSize: const Size(250.0, 40.0),
                           ),
                           child: const Text('Login'),
                           onPressed: () {

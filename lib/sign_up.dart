@@ -190,12 +190,11 @@ class _SignUpState extends State<SignUp> {
                 ),
               ),
               Container(
-                  height: 90,
-                  width: 180,
                   padding: const EdgeInsets.all(20),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      minimumSize: const Size.fromHeight(50),
+                      backgroundColor: Colors.redAccent,
+                      fixedSize: const Size(250.0, 40.0),
                     ),
                     child: const Text('Sign up'),
                     onPressed: () {

@@ -122,7 +122,7 @@ class _NBState extends State<NBPage> {
               ],
             ),
           ),
-        );;
+        );
       },
 
     );
