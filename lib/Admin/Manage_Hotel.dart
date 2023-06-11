@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:trip_now/Admin/HotelList.dart';
 
 class AddHotelScreen extends StatefulWidget {
@@ -25,17 +26,46 @@ class _AddHotelScreenState extends State<AddHotelScreen> {
   CollectionReference collectionReference =
       FirebaseFirestore.instance.collection("hotels");
 
+
   addHotel() {
+    String name = nameController.text.trim();
+    String description = desController.text.trim();
+    String price = priceController.text.trim();
+    String imageUrl = imageUrlController.text.trim();
+
+    if (name.isEmpty || description.isEmpty || price.isEmpty || imageUrl.isEmpty) {
+      Fluttertoast.showToast(
+        msg: 'Please fill in all fields',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.grey,
+        textColor: Colors.white,
+      );
+      return;
+    }
+
     hotelToAdd = {
-      "name": nameController.text,
-      "Description": desController.text,
-      "Price": priceController.text,
-      "ImageUrl": imageUrlController.text,
+      "name": name,
+      "Description": description,
+      "Price": price,
+      "ImageUrl": imageUrl,
     };
 
-    collectionReference
-        .add(hotelToAdd)
-        .whenComplete(() => print("Add to database"));
+    collectionReference.add(hotelToAdd).whenComplete(() {
+      Fluttertoast.showToast(
+        msg: 'Hotel added to database',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.green,
+        textColor: Colors.white,
+      );
+
+      // Clear text fields
+      nameController.clear();
+      desController.clear();
+      priceController.clear();
+      imageUrlController.clear();
+    });
   }
 
   _buildTextField(TextEditingController controller, String labelText) {
@@ -55,6 +85,9 @@ class _AddHotelScreenState extends State<AddHotelScreen> {
       ),
     );
   }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -76,53 +109,63 @@ class _AddHotelScreenState extends State<AddHotelScreen> {
         ],
       ),
       backgroundColor: Colors.purple[100],
-      body: Container(
-        margin: EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          children: [
-            SizedBox(
-              height: 20,
-            ),
-            Text(
-              'Manage Hotel',
-              style: TextStyle(
+
+
+      body: SingleChildScrollView(
+        child: Container(
+          margin: EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SizedBox(height: 40),
+              Text(
+                'Manage Hotel',
+                style: TextStyle(
                   color: Colors.blueAccent,
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            _buildTextField(nameController, 'Name'),
-            SizedBox(
-              height: 20,
-            ),
-            _buildTextField(desController, 'Description'),
-            SizedBox(
-              height: 20,
-            ),
-            _buildTextField(priceController, 'Price'),
-            SizedBox(
-              height: 20,
-            ),
-            _buildTextField(imageUrlController, 'ImageUrl'),
-            SizedBox(
-              height: 20,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: ElevatedButton(
-                  onPressed: () {
-                    addHotel();
-                  },
-                  child: Text(
-                    "Add Hotel",
-                  )),
-            ),
-          ],
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 40),
+              _buildTextField(nameController, 'Name'),
+              SizedBox(height: 20),
+              _buildTextField(desController, 'Description'),
+              SizedBox(height: 20),
+              _buildTextField(priceController, 'Price'),
+              SizedBox(height: 20),
+              _buildTextField(imageUrlController, 'ImageUrl'),
+              SizedBox(height: 40),
+              ElevatedButton(
+                onPressed: addHotel,
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.blue,
+                  padding: EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                child: Text(
+                  "Add Hotel",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).viewInsets.bottom,
+              ),
+            ],
+          ),
         ),
       ),
+
+
+
+
+
     );
   }
 }

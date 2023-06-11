@@ -31,100 +31,103 @@ class _MyAdminAppState extends State<MyAdminApp> {
         backgroundColor: Colors.purple[400],
       ),
       backgroundColor: Colors.purple[100],
+
+
       body: Container(
         padding: EdgeInsets.all(30.0),
         child: GridView.count(
           crossAxisCount: 2,
           children: <Widget>[
-            Card(
-              shape: RoundedRectangleBorder(
-                side: const BorderSide(
-                  color: Colors.white,
+            GestureDetector(
+              onTap: () {
+                // Handle onTap for Manage User
+              },
+              child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0),
                 ),
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-              margin: EdgeInsets.all(8.0),
-              child: InkWell(
-                onTap: () {},
-                splashColor: Colors.cyan,
-                child: Center(
-                    child: Column(
-                  mainAxisSize: MainAxisSize.min,
+                margin: EdgeInsets.all(8.0),
+                elevation: 4,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Icon(
                       Icons.people,
                       size: 70.0,
+                      color: Colors.blueAccent,
                     ),
+                    SizedBox(height: 10),
                     Text(
                       "Manage User",
-                      style: new TextStyle(fontSize: 17.0),
+                      style: TextStyle(fontSize: 17.0, fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
                     )
                   ],
-                )),
-              ),
-            ),
-            Card(
-              shape: RoundedRectangleBorder(
-                side: BorderSide(
-                  color: Colors.white,
                 ),
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-              margin: EdgeInsets.all(8.0),
-              child: InkWell(
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddHotelScreen()));
-                },
-                splashColor: Colors.cyan,
-                child: Center(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Icon(
-                          Icons.hotel,
-                          size: 70.0,
-                        ),
-                        Text(
-                          "Manage Hotel",
-                          style: new TextStyle(fontSize: 17.0),
-                        )
-                      ],
-                    )),
               ),
             ),
-            Card(
-              shape: RoundedRectangleBorder(
-                side: BorderSide(
-                  color: Colors.white,
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddHotelScreen()));
+              },
+              child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0),
                 ),
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-              margin: EdgeInsets.all(8.0),
-              child: InkWell(
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => Login()));
-                },
-                splashColor: Colors.cyan,
-                child: Center(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Icon(
-                          Icons.logout,
-                          size: 70.0,
-                        ),
-                        Text(
-                          "Logout",
-                          style: new TextStyle(fontSize: 17.0),
-                        )
-                      ],
-                    )),
+                margin: EdgeInsets.all(8.0),
+                elevation: 4,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(
+                      Icons.hotel,
+                      size: 70.0,
+                      color: Colors.green,
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      "Manage Hotel",
+                      style: TextStyle(fontSize: 17.0, fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
+                    )
+                  ],
+                ),
               ),
             ),
-
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => Login()));
+              },
+              child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                margin: EdgeInsets.all(8.0),
+                elevation: 4,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(
+                      Icons.logout,
+                      size: 70.0,
+                      color: Colors.red,
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      "Logout",
+                      style: TextStyle(fontSize: 17.0, fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
+                    )
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),
+
+
+
     );
   }
 }
