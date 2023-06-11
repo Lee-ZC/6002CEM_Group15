@@ -1,37 +1,38 @@
 
 
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../NavBar.dart';
 
-class wishlist_page extends StatefulWidget {
-  const wishlist_page({Key? key}) : super(key: key);
+class bookingHistory extends StatefulWidget {
+  const bookingHistory({Key? key}) : super(key: key);
 
   @override
-  State<wishlist_page> createState() => _wishlist_pageState();
+  State<bookingHistory> createState() => _bookingHistoryState();
 }
 
-class _wishlist_pageState extends State<wishlist_page> {
+class _bookingHistoryState extends State<bookingHistory> {
 
   var user = FirebaseAuth.instance.currentUser!;
 
-  CollectionReference ref = FirebaseFirestore.instance.collection('user-favourite-hotels');
+  CollectionReference ref = FirebaseFirestore.instance.collection('Users');
+
 
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
 
+    return Scaffold(
       appBar: AppBar(
-        title: const Text('Trip Now'),
+        title: const Text('Booking History'),
       ),
       drawer: NavBar(),
 
+
       body: StreamBuilder(
-        stream: ref.doc(user.uid).collection("hotels").snapshots(),
+        stream: ref.doc(user.uid).collection("Booking-Hotel-List").snapshots(),
         builder: (_, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasData) {
             return ListView.builder(
@@ -50,14 +51,14 @@ class _wishlist_pageState extends State<wishlist_page> {
                           children: [
                             Column(
                               children: [
-                                Image.network(doc['ImageUrl'],
+                                Image.network(doc['Hotel Image'],
                                     height: 200, width: 395, fit: BoxFit.cover),
                                 Text(
                                   doc['Hotel name'],
                                   style: TextStyle(color: Colors.black,fontSize: 25,fontWeight: FontWeight.bold),
                                 ),
                                 Text(
-                                  doc['Price'],
+                                  doc['Date'],
                                   style: TextStyle(color: Colors.black,fontSize: 25,fontWeight: FontWeight.bold),
                                 ),
                               ],
@@ -68,15 +69,13 @@ class _wishlist_pageState extends State<wishlist_page> {
                   );
                 });
           } else
-            return Center( child: Text('No data available !',style: TextStyle(color: Colors.black,fontSize: 20,fontWeight: FontWeight.bold)));
+             return Center( child: Text('No data available !',style: TextStyle(color: Colors.black,fontSize: 20,fontWeight: FontWeight.bold)));
         },
       ),
 
 
 
 
-
-      
     );
   }
 }
