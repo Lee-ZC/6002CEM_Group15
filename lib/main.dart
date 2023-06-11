@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
       title: 'Trip Now',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.purple,
+        primarySwatch: Colors.red,
       ),
       home: MainPage(),
     );

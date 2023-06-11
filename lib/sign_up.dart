@@ -197,7 +197,7 @@ class _SignUpState extends State<SignUp> {
                     style: ElevatedButton.styleFrom(
                       minimumSize: const Size.fromHeight(50),
                     ),
-                    child: const Text('Login'),
+                    child: const Text('Sign up'),
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         signUp();
