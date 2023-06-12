@@ -27,15 +27,18 @@ class NBPage extends StatefulWidget {
   const NBPage({Key? key}) : super(key: key);
 
   @override
+
   _NBState createState() => _NBState();
 }
 
 class _NBState extends State<NBPage> {
+
   var user = FirebaseAuth.instance.currentUser!;
 
 
   @override
   Widget build(BuildContext context) {
+
     var name=null;
     CollectionReference collection = FirebaseFirestore.instance.collection('Users') as CollectionReference<Object?>;
 
@@ -69,16 +72,6 @@ class _NBState extends State<NBPage> {
                 UserAccountsDrawerHeader(
                   accountName: Text(name),
                   accountEmail: Text(user.email!),
-                  // currentAccountPicture: CircleAvatar(
-                  //   child: ClipOval(
-                  //     child: Image.network(
-                  //       getUserInfo().getUImg().toString(),
-                  //       fit: BoxFit.cover,
-                  //       width: 90,
-                  //       height: 90,
-                  //     ),
-                  //   ),
-                  // ),
                   decoration: BoxDecoration(
                     color: Colors.blue,
                     image: DecorationImage(
