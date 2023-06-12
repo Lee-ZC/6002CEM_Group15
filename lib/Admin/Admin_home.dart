@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:trip_now/Admin/Manage_Hotel.dart';
+import 'package:trip_now/Admin/userManage.dart';
 import 'package:trip_now/main.dart';
 import 'package:trip_now/login.dart';
 
@@ -41,6 +42,8 @@ class _MyAdminAppState extends State<MyAdminApp> {
             GestureDetector(
               onTap: () {
                 // Handle onTap for Manage User
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserManage()));
+
               },
               child: Card(
                 shape: RoundedRectangleBorder(
