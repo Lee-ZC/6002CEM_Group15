@@ -23,6 +23,7 @@ class _DetailPageState extends State<DetailPage> {
   TextEditingController nameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController dateinput = TextEditingController();
+  TextEditingController priceController  = TextEditingController();
 
   late Map<String, dynamic> hotelToBook;
 
@@ -92,7 +93,7 @@ class _DetailPageState extends State<DetailPage> {
     }
   }
 
-// Function to show a toast message
+  // Function to show a toast message
   void showToast(String message) {
     Fluttertoast.showToast(
       msg: message,
@@ -104,6 +105,8 @@ class _DetailPageState extends State<DetailPage> {
       fontSize: 16.0,
     );
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -207,6 +210,8 @@ class _DetailPageState extends State<DetailPage> {
                       );
                     },
                   ),
+
+
                   ElevatedButton(
                     child: Text("Book Now"),
                     onPressed: () {
@@ -264,6 +269,7 @@ class _DetailPageState extends State<DetailPage> {
                                     }
                                   },
                                 ),
+
                                 SizedBox(height: 16.0),
                                 Align(
                                   alignment: Alignment.center,
@@ -303,6 +309,12 @@ class _DetailPageState extends State<DetailPage> {
                                               ],
                                             ),
                                           );
+
+                                          // Clear text fields
+                                          nameController.clear();
+                                          phoneController.clear();
+                                          dateinput.clear();
+
                                         }).catchError((error) {
                                           showDialog(
                                             context: context,
@@ -330,7 +342,166 @@ class _DetailPageState extends State<DetailPage> {
                       );
                     },
                   ),
-                ],
+
+        //           ElevatedButton(
+        //   child: Text("Book Now"),
+        //   onPressed: () {
+        //     showDialog(
+        //       context: context,
+        //       builder: (context) => Dialog(
+        //         child: StatefulBuilder(
+        //           builder: (BuildContext context, StateSetter setState) {
+        //             DateTimeRange? pickedDateRange;
+        //             double totalPrice = 0;
+        //
+        //             void updateTotalPrice() {
+        //               if (pickedDateRange != null) {
+        //                 int dateDifference = pickedDateRange!.end.difference(pickedDateRange!.start).inDays;
+        //                 totalPrice = dateDifference * double.parse(widget.post["Price"]);
+        //               } else {
+        //                 totalPrice = 0;
+        //               }
+        //             }
+        //
+        //             return Container(
+        //               padding: EdgeInsets.all(16.0),
+        //               child: Column(
+        //                 mainAxisSize: MainAxisSize.min,
+        //                 crossAxisAlignment: CrossAxisAlignment.start,
+        //                 children: <Widget>[
+        //                   Text(
+        //                     "Book Hotel",
+        //                     style: TextStyle(
+        //                       fontSize: 20.0,
+        //                       fontWeight: FontWeight.bold,
+        //                     ),
+        //                   ),
+        //                   SizedBox(height: 16.0),
+        //                   _buildTextField(nameController, 'Guest Name'),
+        //                   SizedBox(height: 8.0),
+        //                   _buildTextField(phoneController, 'Phone'),
+        //                   SizedBox(height: 8.0),
+        //
+        //                   TextField(
+        //                     controller: dateinput,
+        //                     decoration: InputDecoration(
+        //                       icon: Icon(Icons.calendar_today),
+        //                       labelText: "Select Booking Date",
+        //                     ),
+        //                     readOnly: true,
+        //                     onTap: () async {
+        //                       pickedDateRange = await showDateRangePicker(
+        //                         context: context,
+        //                         firstDate: DateTime(2000),
+        //                         lastDate: DateTime(2025),
+        //                       );
+        //
+        //                       if (pickedDateRange != null) {
+        //                         String formattedStartDate =
+        //                         DateFormat('yyyy-MM-dd').format(pickedDateRange!.start);
+        //                         String formattedEndDate =
+        //                         DateFormat('yyyy-MM-dd').format(pickedDateRange!.end);
+        //                         String formattedDateRange = "$formattedStartDate to $formattedEndDate";
+        //
+        //                         setState(() {
+        //                           dateinput.text = formattedDateRange;
+        //                           updateTotalPrice();
+        //                         });
+        //                       } else {
+        //                         print("Date range is not selected");
+        //                       }
+        //                     },
+        //                   ),
+        //                   SizedBox(height: 8.0),
+        //                   Text(
+        //                     "Total Price: \$${totalPrice.toStringAsFixed(2)}",
+        //                     style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+        //                   ),
+        //                   SizedBox(height: 16.0),
+        //                   Align(
+        //                     alignment: Alignment.center,
+        //                     child: ElevatedButton(
+        //                       onPressed: () {
+        //                         if (nameController.text.isEmpty ||
+        //                             phoneController.text.isEmpty ||
+        //                             dateinput.text.isEmpty) {
+        //                           showToast("Please fill in all the required fields.");
+        //                         } else {
+        //                           if (pickedDateRange != null) {
+        //                             hotelToBook = {
+        //                               "Guest name": nameController.text,
+        //                               "Phone number": phoneController.text,
+        //                               "Date": dateinput.text,
+        //                               "Total price": totalPrice.toStringAsFixed(2),
+        //                               "Hotel name": widget.post["name"],
+        //                               "Hotel Image": widget.post["ImageUrl"],
+        //                             };
+        //                             collectionReference
+        //                                 .doc(user.uid)
+        //                                 .collection('Booking-Hotel-List')
+        //                                 .add(hotelToBook)
+        //                                 .then((value) {
+        //                               showDialog(
+        //                                 context: context,
+        //                                 builder: (context) => AlertDialog(
+        //                                   title: Text("Success"),
+        //                                   content: Text("Hotel booked successfully!"),
+        //                                   actions: [
+        //                                     TextButton(
+        //                                       onPressed: () {
+        //                                         Navigator.pop(context);
+        //                                         Navigator.pop(context);
+        //                                       },
+        //                                       child: Text("OK"),
+        //                                     ),
+        //                                   ],
+        //                                 ),
+        //                               );
+        //
+        //                               // Clear text fields
+        //                               nameController.clear();
+        //                               phoneController.clear();
+        //                               dateinput.clear();
+        //
+        //                             }).catchError((error) {
+        //                               showDialog(
+        //                                 context: context,
+        //                                 builder: (context) => AlertDialog(
+        //                                   title: Text("Error"),
+        //                                   content: Text("Failed to book the hotel. Please try again."),
+        //                                   actions: [
+        //                                     TextButton(
+        //                                       onPressed: () => Navigator.pop(context),
+        //                                       child: Text("OK"),
+        //                                     ),
+        //                                   ],
+        //                                 ),
+        //                               );
+        //                             });
+        //                           } else {
+        //                             showToast("Invalid date range.");
+        //                           }
+        //                         }
+        //                       },
+        //                       child: Text("Book Now"),
+        //                     ),
+        //                   ),
+        //                 ],
+        //               ),
+        //             );
+        //           },
+        //         ),
+        //       ),
+        //     );
+        //   },
+        // ),
+
+
+
+
+
+
+        ],
               ),
             ],
           ),

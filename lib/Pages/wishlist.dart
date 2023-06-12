@@ -26,51 +26,122 @@ class _wishlist_pageState extends State<wishlist_page> {
     return Scaffold(
 
       appBar: AppBar(
-        title: const Text('Trip Now'),
+        title: const Text('Wishlist'),
       ),
       drawer: NavBar(),
 
+      // body: StreamBuilder(
+      //   stream: ref.doc(user.uid).collection("hotels").snapshots(),
+      //   builder: (_, AsyncSnapshot<QuerySnapshot> snapshot) {
+      //     if (snapshot.hasData) {
+      //       return ListView.builder(
+      //           itemCount: snapshot.data!.docs.length,
+      //           itemBuilder: (context, index) {
+      //             dynamic doc = snapshot.data!.docs[index].data();
+      //
+      //             return SizedBox(
+      //               height: 335.0,
+      //               child: Card(
+      //                   margin: EdgeInsets.all(8.0),
+      //                   elevation: 10.0,
+      //                   color: Colors.blueAccent.shade100,
+      //                   child: Row(
+      //                     mainAxisAlignment: MainAxisAlignment.spaceAround,
+      //                     children: [
+      //                       Column(
+      //                         children: [
+      //                           Image.network(doc['ImageUrl'],
+      //                               height: 200, width: 395, fit: BoxFit.cover),
+      //                           Text(
+      //                             doc['Hotel name'],
+      //                             style: TextStyle(color: Colors.black,fontSize: 25,fontWeight: FontWeight.bold),
+      //                           ),
+      //                           Text(
+      //                             doc['Price'],
+      //                             style: TextStyle(color: Colors.black,fontSize: 25,fontWeight: FontWeight.bold),
+      //                           ),
+      //                         ],
+      //                       ),
+      //                     ],
+      //                   )
+      //               ),
+      //             );
+      //
+      //           });
+      //     } else
+      //       return Center( child: Text('No data available !',style: TextStyle(color: Colors.black,fontSize: 20,fontWeight: FontWeight.bold)));
+      //   },
+      // ),
       body: StreamBuilder(
         stream: ref.doc(user.uid).collection("hotels").snapshots(),
         builder: (_, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasData) {
             return ListView.builder(
-                itemCount: snapshot.data!.docs.length,
-                itemBuilder: (context, index) {
-                  dynamic doc = snapshot.data!.docs[index].data();
+              itemCount: snapshot.data!.docs.length,
+              itemBuilder: (context, index) {
+                dynamic doc = snapshot.data!.docs[index].data();
 
-                  return SizedBox(
-                    height: 335.0,
-                    child: Card(
-                        margin: EdgeInsets.all(8.0),
-                        elevation: 10.0,
-                        color: Colors.blueAccent.shade100,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Column(
-                              children: [
-                                Image.network(doc['ImageUrl'],
-                                    height: 200, width: 395, fit: BoxFit.cover),
-                                Text(
-                                  doc['Hotel name'],
-                                  style: TextStyle(color: Colors.black,fontSize: 25,fontWeight: FontWeight.bold),
-                                ),
-                                Text(
-                                  doc['Price'],
-                                  style: TextStyle(color: Colors.black,fontSize: 25,fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            ),
-                          ],
-                        )
+                return Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                  child: Card(
+                    elevation: 10.0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16.0),
                     ),
-                  );
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(16.0),
+                          ),
+                          child: Image.network(
+                            doc['ImageUrl'],
+                            height: 200,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(16.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                doc['Hotel name'],
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(height: 8.0),
+                              Text(
+                                'Price: \$${doc['Price']}',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                ),
+                              ),
+                              SizedBox(height: 16.0),
 
-
-                });
-          } else
-            return Center( child: Text('No data available !',style: TextStyle(color: Colors.black,fontSize: 20,fontWeight: FontWeight.bold)));
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            );
+          } else {
+            return Center(
+              child: Text(
+                'No data available!',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            );
+          }
         },
       ),
 
@@ -78,7 +149,7 @@ class _wishlist_pageState extends State<wishlist_page> {
 
 
 
-      
+
     );
   }
 }
