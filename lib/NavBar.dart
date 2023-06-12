@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:trip_now/Pages/bookingHistory.dart';
 import 'package:trip_now/Pages/chat.dart';
 import 'package:trip_now/Pages/home.dart';
 import 'package:trip_now/Pages/profile.dart';
@@ -89,6 +90,11 @@ class _NBState extends State<NBPage> {
                   leading: Icon(Icons.favorite),
                   title: Text('WishList'),
                   onTap: ()=>Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=>wishlist_page())),
+                ),
+                ListTile(
+                  leading: Icon(Icons.history),
+                  title: Text('Booking History'),
+                  onTap: () => Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=>bookingHistory())),
                 ),
                 ListTile(
                   leading: Icon(Icons.chat),
