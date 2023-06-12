@@ -50,42 +50,7 @@ class _HomePageState extends State<HomePage> {
                 itemBuilder: (context, index) {
                   dynamic doc = snapshot.data!.docs[index].data();
 
-                  // return SizedBox(
-                  //   height: 335.0,
-                  //   child: Card(
-                  //       margin: EdgeInsets.all(8.0),
-                  //       elevation: 10.0,
-                  //     color: Colors.deepOrangeAccent.shade100,
-                  //     child: Row(
-                  //       mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  //       children: [
-                  //         Column(
-                  //           children: [
-                  //             Image.network(doc['ImageUrl'],
-                  //            height: 200, width: 395, fit: BoxFit.cover),
-                  //             Text(
-                  //               doc['name'],
-                  //               style: TextStyle(color: Colors.black,fontSize: 25,fontWeight: FontWeight.bold),
-                  //             ),
-                  //             Text(
-                  //               "RM"+
-                  //               doc['Price'] +" night",
-                  //               style: TextStyle(color: Colors.black,fontSize: 20,overflow: TextOverflow.visible),
-                  //             ),
-                  //             ButtonBar(
-                  //               children: <Widget>[
-                  //                 ElevatedButton(
-                  //                   child: Text("More Info"),
-                  //                   onPressed: ()=>navigateToDetail(snapshot.data!.docs[index]),
-                  //                 ),
-                  //               ],
-                  //             ),
-                  //           ],
-                  //         ),
-                  //       ],
-                  //     )
-                  //   ),
-                  // );
+
 
                   return SizedBox(
                     height: 335.0,
@@ -162,6 +127,9 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   );
+
+
+
 
 
 

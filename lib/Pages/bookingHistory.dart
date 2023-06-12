@@ -36,42 +36,77 @@ class _bookingHistoryState extends State<bookingHistory> {
         builder: (_, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasData) {
             return ListView.builder(
-                itemCount: snapshot.data!.docs.length,
-                itemBuilder: (context, index) {
-                  dynamic doc = snapshot.data!.docs[index].data();
+              itemCount: snapshot.data!.docs.length,
+              itemBuilder: (context, index) {
+                dynamic doc = snapshot.data!.docs[index].data();
 
-                  return SizedBox(
-                    height: 335.0,
-                    child: Card(
-                        margin: EdgeInsets.all(8.0),
-                        elevation: 10.0,
-                        color: Colors.blueAccent.shade100,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Column(
-                              children: [
-                                Image.network(doc['Hotel Image'],
-                                    height: 200, width: 395, fit: BoxFit.cover),
-                                Text(
-                                  doc['Hotel name'],
-                                  style: TextStyle(color: Colors.black,fontSize: 25,fontWeight: FontWeight.bold),
+                return Card(
+
+                  margin: EdgeInsets.all(16.0),
+                  elevation: 10.0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16.0),
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(16.0),
+                          bottomLeft: Radius.circular(16.0),
+                        ),
+                        child: Image.network(
+                          doc['Hotel Image'],
+                          height: 200,
+                          width: 200,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.all(16.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                doc['Hotel name'],
+                                style: TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
                                 ),
-                                Text(
-                                  doc['Date'],
-                                  style: TextStyle(color: Colors.black,fontSize: 25,fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(height: 8.0),
+                              Text(
+                                'Date: ${doc['Date']}',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.grey[700],
                                 ),
-                              ],
-                            ),
-                          ],
-                        )
-                    ),
-                  );
-                });
-          } else
-             return Center( child: Text('No data available !',style: TextStyle(color: Colors.black,fontSize: 20,fontWeight: FontWeight.bold)));
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            );
+          } else {
+            return Center(
+              child: Text(
+                'No data available!',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            );
+          }
         },
       ),
+
+
 
 
 
