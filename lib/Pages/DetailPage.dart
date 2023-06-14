@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 //import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import '../api/notification_api.dart';
 
 class DetailPage extends StatefulWidget {
@@ -143,6 +144,43 @@ class _DetailPageState extends State<DetailPage> {
   // }
 
 
+  Map<String, dynamic> weatherData = {};
+
+  @override
+  void initState() {
+    super.initState();
+    fetchWeatherData();
+  }
+
+  Future<void> fetchWeatherData() async {
+    final apiKey = '734454ae3dee8cbb3aade569fa83da3b'; // Replace with your OpenWeatherMap API key
+    final cityName = widget.post["Location"]; // Replace with the location from your post
+
+    final url = Uri.parse('https://api.openweathermap.org/data/2.5/weather?q=$cityName&appid=$apiKey');
+
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+
+      setState(() {
+        weatherData = data;
+      });
+    } else {
+      print('Failed to fetch weather data: ${response.statusCode}');
+    }
+  }
+
+  String getFormattedTemperature() {
+    if (weatherData.isNotEmpty) {
+      final double temperature = weatherData['main']['temp'];
+      final int celsiusTemperature = (temperature - 273.15).round();
+
+      return '$celsiusTemperature°C'; // Display temperature in Celsius
+    } else {
+      return '';
+    }
+  }
 
 
   @override
@@ -158,12 +196,11 @@ class _DetailPageState extends State<DetailPage> {
 
       body: SingleChildScrollView(
 
-
         child: Container(
           color: Colors.lightBlue[50],
 
-
           padding: EdgeInsets.all(16.0),
+
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -174,14 +211,14 @@ class _DetailPageState extends State<DetailPage> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 8.0),
+              SizedBox(height: 20.0),
               Image.network(
                 widget.post['ImageUrl'],
                 height: 200,
                 width: double.infinity,
                 fit: BoxFit.cover,
               ),
-              SizedBox(height: 16.0),
+              SizedBox(height: 25.0),
               Text(
                 "Description",
                 style: TextStyle(
@@ -196,7 +233,22 @@ class _DetailPageState extends State<DetailPage> {
                   color: Colors.grey[600],
                 ),
               ),
-              SizedBox(height: 16.0),
+              SizedBox(height: 30.0),
+              Text(
+                "Location",
+                style: TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                widget.post["Location"],
+                style: TextStyle(
+                  fontSize: 16.0,
+                  color: Colors.grey[600],
+                ),
+              ),
+              SizedBox(height: 30.0),
               Text(
                 "Price",
                 style: TextStyle(
@@ -211,7 +263,64 @@ class _DetailPageState extends State<DetailPage> {
                   color: Colors.grey[600],
                 ),
               ),
-              SizedBox(height: 16.0),
+              SizedBox(height: 30.0),
+              // Text(
+              //   "Weather",
+              //   style: TextStyle(
+              //     fontSize: 18.0,
+              //     fontWeight: FontWeight.bold,
+              //   ),
+              // ),
+              // if (weatherData.isNotEmpty)
+              //   Column(
+              //     children: [
+              //       Text(
+              //         'Temperature: ${weatherData['main']['temp']}',
+              //         style: TextStyle(
+              //           fontSize: 16.0,
+              //           color: Colors.grey[600],
+              //         ),
+              //       ),
+              //       Text(
+              //         'Description: ${weatherData['weather'][0]['description']}',
+              //         style: TextStyle(
+              //           fontSize: 16.0,
+              //           color: Colors.grey[600],
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              Text(
+                "Weather",
+                style: TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              if (weatherData.isNotEmpty)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Temperature : ${getFormattedTemperature()}',
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        color: Colors.grey[600],
+                      ),
+                      textAlign: TextAlign.left, // Align text to the left
+                    ),
+                    SizedBox(height: 5.0),
+                    Text(
+                      'Description   : ''${weatherData['weather'][0]['description']}',
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        color: Colors.grey[600],
+                      ),
+                      textAlign: TextAlign.left, // Align text to the left
+                    ),
+                    SizedBox(height: 5.0),
+                  ],
+                ),
               ButtonBar(
                 alignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -382,180 +491,12 @@ class _DetailPageState extends State<DetailPage> {
                       );
                     },
                   ),
-
-        //           ElevatedButton(
-        //   child: Text("Book Now"),
-        //   onPressed: () {
-        //     showDialog(
-        //       context: context,
-        //       builder: (context) => Dialog(
-        //         child: StatefulBuilder(
-        //           builder: (BuildContext context, StateSetter setState) {
-        //             DateTimeRange? pickedDateRange;
-        //             double totalPrice = 0;
-        //
-        //             void updateTotalPrice() {
-        //               if (pickedDateRange != null) {
-        //                 int dateDifference = pickedDateRange!.end.difference(pickedDateRange!.start).inDays;
-        //                 totalPrice = dateDifference * double.parse(widget.post["Price"]);
-        //               } else {
-        //                 totalPrice = 0;
-        //               }
-        //             }
-        //
-        //             return Container(
-        //               padding: EdgeInsets.all(16.0),
-        //               child: Column(
-        //                 mainAxisSize: MainAxisSize.min,
-        //                 crossAxisAlignment: CrossAxisAlignment.start,
-        //                 children: <Widget>[
-        //                   Text(
-        //                     "Book Hotel",
-        //                     style: TextStyle(
-        //                       fontSize: 20.0,
-        //                       fontWeight: FontWeight.bold,
-        //                     ),
-        //                   ),
-        //                   SizedBox(height: 16.0),
-        //                   _buildTextField(nameController, 'Guest Name'),
-        //                   SizedBox(height: 8.0),
-        //                   _buildTextField(phoneController, 'Phone'),
-        //                   SizedBox(height: 8.0),
-        //
-        //                   TextField(
-        //                     controller: dateinput,
-        //                     decoration: InputDecoration(
-        //                       icon: Icon(Icons.calendar_today),
-        //                       labelText: "Select Booking Date",
-        //                     ),
-        //                     readOnly: true,
-        //                     onTap: () async {
-        //                       pickedDateRange = await showDateRangePicker(
-        //                         context: context,
-        //                         firstDate: DateTime(2000),
-        //                         lastDate: DateTime(2025),
-        //                       );
-        //
-        //                       if (pickedDateRange != null) {
-        //                         String formattedStartDate =
-        //                         DateFormat('yyyy-MM-dd').format(pickedDateRange!.start);
-        //                         String formattedEndDate =
-        //                         DateFormat('yyyy-MM-dd').format(pickedDateRange!.end);
-        //                         String formattedDateRange = "$formattedStartDate to $formattedEndDate";
-        //
-        //                         setState(() {
-        //                           dateinput.text = formattedDateRange;
-        //                           updateTotalPrice();
-        //                         });
-        //                       } else {
-        //                         print("Date range is not selected");
-        //                       }
-        //                     },
-        //                   ),
-        //                   SizedBox(height: 8.0),
-        //                   Text(
-        //                     "Total Price: \$${totalPrice.toStringAsFixed(2)}",
-        //                     style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
-        //                   ),
-        //                   SizedBox(height: 16.0),
-        //                   Align(
-        //                     alignment: Alignment.center,
-        //                     child: ElevatedButton(
-        //                       onPressed: () {
-        //                         if (nameController.text.isEmpty ||
-        //                             phoneController.text.isEmpty ||
-        //                             dateinput.text.isEmpty) {
-        //                           showToast("Please fill in all the required fields.");
-        //                         } else {
-        //                           if (pickedDateRange != null) {
-        //                             hotelToBook = {
-        //                               "Guest name": nameController.text,
-        //                               "Phone number": phoneController.text,
-        //                               "Date": dateinput.text,
-        //                               "Total price": totalPrice.toStringAsFixed(2),
-        //                               "Hotel name": widget.post["name"],
-        //                               "Hotel Image": widget.post["ImageUrl"],
-        //                             };
-        //                             collectionReference
-        //                                 .doc(user.uid)
-        //                                 .collection('Booking-Hotel-List')
-        //                                 .add(hotelToBook)
-        //                                 .then((value) {
-        //                               showDialog(
-        //                                 context: context,
-        //                                 builder: (context) => AlertDialog(
-        //                                   title: Text("Success"),
-        //                                   content: Text("Hotel booked successfully!"),
-        //                                   actions: [
-        //                                     TextButton(
-        //                                       onPressed: () {
-        //                                         Navigator.pop(context);
-        //                                         Navigator.pop(context);
-        //                                       },
-        //                                       child: Text("OK"),
-        //                                     ),
-        //                                   ],
-        //                                 ),
-        //                               );
-        //
-        //                               // Clear text fields
-        //                               nameController.clear();
-        //                               phoneController.clear();
-        //                               dateinput.clear();
-        //
-        //                             }).catchError((error) {
-        //                               showDialog(
-        //                                 context: context,
-        //                                 builder: (context) => AlertDialog(
-        //                                   title: Text("Error"),
-        //                                   content: Text("Failed to book the hotel. Please try again."),
-        //                                   actions: [
-        //                                     TextButton(
-        //                                       onPressed: () => Navigator.pop(context),
-        //                                       child: Text("OK"),
-        //                                     ),
-        //                                   ],
-        //                                 ),
-        //                               );
-        //                             });
-        //                           } else {
-        //                             showToast("Invalid date range.");
-        //                           }
-        //                         }
-        //                       },
-        //                       child: Text("Book Now"),
-        //                     ),
-        //                   ),
-        //                 ],
-        //               ),
-        //             );
-        //           },
-        //         ),
-        //       ),
-        //     );
-        //   },
-        // ),
-
-
-
-
-
-
-        ],
+                ],
               ),
             ],
           ),
         ),
-
-
-
       ),
-
-
-
-
-
-
 
     );
   }
