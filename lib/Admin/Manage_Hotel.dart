@@ -20,6 +20,7 @@ class _AddHotelScreenState extends State<AddHotelScreen> {
   TextEditingController desController = TextEditingController();
   TextEditingController priceController = TextEditingController();
   TextEditingController imageUrlController = TextEditingController();
+  TextEditingController locationController = TextEditingController();
 
   late Map<String, dynamic> hotelToAdd;
 
@@ -31,9 +32,10 @@ class _AddHotelScreenState extends State<AddHotelScreen> {
     String name = nameController.text.trim();
     String description = desController.text.trim();
     String price = priceController.text.trim();
+    String location = locationController.text.trim();
     String imageUrl = imageUrlController.text.trim();
 
-    if (name.isEmpty || description.isEmpty || price.isEmpty || imageUrl.isEmpty) {
+    if (name.isEmpty || description.isEmpty || price.isEmpty || imageUrl.isEmpty|| location.isEmpty) {
       Fluttertoast.showToast(
         msg: 'Please fill in all fields',
         toastLength: Toast.LENGTH_SHORT,
@@ -48,6 +50,7 @@ class _AddHotelScreenState extends State<AddHotelScreen> {
       "name": name,
       "Description": description,
       "Price": price,
+      "Location": location,
       "ImageUrl": imageUrl,
     };
 
@@ -64,6 +67,7 @@ class _AddHotelScreenState extends State<AddHotelScreen> {
       nameController.clear();
       desController.clear();
       priceController.clear();
+      locationController.clear();
       imageUrlController.clear();
     });
   }
@@ -117,7 +121,7 @@ class _AddHotelScreenState extends State<AddHotelScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SizedBox(height: 40),
+              SizedBox(height: 20),
               Text(
                 'Manage Hotel',
                 style: TextStyle(
@@ -127,12 +131,14 @@ class _AddHotelScreenState extends State<AddHotelScreen> {
                 ),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: 40),
+              SizedBox(height: 20),
               _buildTextField(nameController, 'Name'),
               SizedBox(height: 20),
               _buildTextField(desController, 'Description'),
               SizedBox(height: 20),
               _buildTextField(priceController, 'Price'),
+              SizedBox(height: 20),
+              _buildTextField(locationController, 'Location'),
               SizedBox(height: 20),
               _buildTextField(imageUrlController, 'ImageUrl'),
               SizedBox(height: 40),

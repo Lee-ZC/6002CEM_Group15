@@ -45,6 +45,7 @@ dependencies:
   firebase_core: ^2.13.0
   email_validator: ^2.0.1
 #  flutter_local_notifications: ^7.0.0
+  http: ^0.13.4
 
 
   firebase_core_platform_interface: 4.8.0

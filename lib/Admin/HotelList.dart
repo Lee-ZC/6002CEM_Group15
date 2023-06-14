@@ -18,6 +18,7 @@ class _hotelListState extends State<hotelList> {
   TextEditingController nameController = TextEditingController();
   TextEditingController desController = TextEditingController();
   TextEditingController priceController = TextEditingController();
+  TextEditingController locationController = TextEditingController();
   TextEditingController imageUrlController = TextEditingController();
 
   _buildTextField(TextEditingController controller, String labelText) {
@@ -58,7 +59,6 @@ class _hotelListState extends State<hotelList> {
                 itemBuilder: (context, index) {
                   dynamic doc = snapshot.data!.docs[index].data();
 
-
                   return Card(
                     elevation: 2,
                     margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
@@ -73,6 +73,7 @@ class _hotelListState extends State<hotelList> {
                           desController.text = doc['Description'];
                           priceController.text = doc['Price'];
                           imageUrlController.text = doc['ImageUrl'];
+                          locationController.text = doc['Location'];
 
                           showDialog(
                               context: context,
@@ -103,6 +104,11 @@ class _hotelListState extends State<hotelList> {
                                           height: 20,
                                         ),
                                         _buildTextField(
+                                            locationController, 'Location'),
+                                        SizedBox(
+                                          height: 20,
+                                        ),
+                                        _buildTextField(
                                             imageUrlController, 'ImageUrl'),
                                         SizedBox(
                                           height: 20,
@@ -115,8 +121,9 @@ class _hotelListState extends State<hotelList> {
                                               String newDescription = desController.text.trim();
                                               String newPrice = priceController.text.trim();
                                               String newImageUrl = imageUrlController.text.trim();
+                                              String newLocation = locationController.text.trim();
 
-                                              if (newName.isEmpty || newDescription.isEmpty || newPrice.isEmpty || newImageUrl.isEmpty) {
+                                              if (newName.isEmpty || newDescription.isEmpty || newPrice.isEmpty || newImageUrl.isEmpty || newLocation.isEmpty) {
                                                 Fluttertoast.showToast(
                                                   msg: 'Please fill in all fields',
                                                   toastLength: Toast.LENGTH_SHORT,
@@ -132,6 +139,7 @@ class _hotelListState extends State<hotelList> {
                                                 "Description": newDescription,
                                                 "Price": newPrice,
                                                 "ImageUrl": newImageUrl,
+                                                "Location": newLocation
                                               }).then((_) {
                                                 Fluttertoast.showToast(
                                                   msg: 'Hotel updated successfully!',
@@ -226,7 +234,7 @@ class _hotelListState extends State<hotelList> {
                         children: <Widget>[
                           SizedBox(height: 8),
                           Text(
-                            doc['Description'],
+                            doc['Location'],
                             style: TextStyle(
                               color: Colors.grey[600],
                               fontSize: 16,

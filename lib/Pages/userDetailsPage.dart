@@ -72,7 +72,7 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
                 ),
               ),
               SizedBox(
-                height: 50,
+                height: 5,
               ),
               Padding(
                 padding: const EdgeInsets.all(16.0),
