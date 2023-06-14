@@ -64,7 +64,7 @@ class _NBState extends State<NBPage> {
                   accountName: Text(name),
                   accountEmail: Text(user.email!),
                   decoration: BoxDecoration(
-                    color: Colors.blue,
+                    color: Colors.red,
                     image: DecorationImage(
                         fit: BoxFit.fill,
                         image: NetworkImage(

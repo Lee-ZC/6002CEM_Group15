@@ -65,8 +65,6 @@ class SecondScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //drawer: NavBar(),
-      //bottomNavigationBar: bottom_Nav(),
       body: StreamBuilder <User?> (
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context,snapshot){

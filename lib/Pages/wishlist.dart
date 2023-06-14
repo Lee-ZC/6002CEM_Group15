@@ -30,48 +30,6 @@ class _wishlist_pageState extends State<wishlist_page> {
       ),
       drawer: NavBar(),
 
-      // body: StreamBuilder(
-      //   stream: ref.doc(user.uid).collection("hotels").snapshots(),
-      //   builder: (_, AsyncSnapshot<QuerySnapshot> snapshot) {
-      //     if (snapshot.hasData) {
-      //       return ListView.builder(
-      //           itemCount: snapshot.data!.docs.length,
-      //           itemBuilder: (context, index) {
-      //             dynamic doc = snapshot.data!.docs[index].data();
-      //
-      //             return SizedBox(
-      //               height: 335.0,
-      //               child: Card(
-      //                   margin: EdgeInsets.all(8.0),
-      //                   elevation: 10.0,
-      //                   color: Colors.blueAccent.shade100,
-      //                   child: Row(
-      //                     mainAxisAlignment: MainAxisAlignment.spaceAround,
-      //                     children: [
-      //                       Column(
-      //                         children: [
-      //                           Image.network(doc['ImageUrl'],
-      //                               height: 200, width: 395, fit: BoxFit.cover),
-      //                           Text(
-      //                             doc['Hotel name'],
-      //                             style: TextStyle(color: Colors.black,fontSize: 25,fontWeight: FontWeight.bold),
-      //                           ),
-      //                           Text(
-      //                             doc['Price'],
-      //                             style: TextStyle(color: Colors.black,fontSize: 25,fontWeight: FontWeight.bold),
-      //                           ),
-      //                         ],
-      //                       ),
-      //                     ],
-      //                   )
-      //               ),
-      //             );
-      //
-      //           });
-      //     } else
-      //       return Center( child: Text('No data available !',style: TextStyle(color: Colors.black,fontSize: 20,fontWeight: FontWeight.bold)));
-      //   },
-      // ),
       body: StreamBuilder(
         stream: ref.doc(user.uid).collection("hotels").snapshots(),
         builder: (_, AsyncSnapshot<QuerySnapshot> snapshot) {
