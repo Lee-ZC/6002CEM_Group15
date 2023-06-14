@@ -11,6 +11,7 @@ import 'main.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:trip_now/model/user.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class NavBar extends StatelessWidget {
   const NavBar({Key? key}) : super(key: key);
@@ -36,7 +37,6 @@ class NBPage extends StatefulWidget {
 class _NBState extends State<NBPage> {
 
   var user = FirebaseAuth.instance.currentUser!;
-  final Uri _url = Uri.parse('https://flutter.dev');
   String name="";
 
   @override
@@ -89,7 +89,19 @@ class _NBState extends State<NBPage> {
                 ListTile(
                   leading: Icon(Icons.chat),
                   title: Text('Customer Support'),
-                  onTap: (){},
+                  onTap: (){
+                    Future <void> launchWhatsApp() async {
+                      final String phoneNumber = '60124596889';
+                      Uri url = Uri.parse('https://api.whatsapp.com/send/?phone=60124596889&text&type=phone_number&app_absent=0');
+                      if (!await launchUrl(launchUrl(Uri.parse('https://wa.me/$phoneNumber?text=Hi, I need help.'),
+                          mode: LaunchMode.externalApplication) as Uri)) {
+                        throw Exception('Could not launch $url');
+                      }
+                    }
+
+                    launchWhatsApp();
+
+    },
                 ),
                 ListTile(
                   leading: Icon(Icons.person),
