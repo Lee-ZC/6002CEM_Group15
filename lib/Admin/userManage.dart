@@ -13,7 +13,7 @@ class UserManage extends StatefulWidget{
   State<UserManage> createState() => _UserManageState();
 
 }
-List allData=[];
+List<Map<String, dynamic>> allData = [];
 class _UserManageState extends State<UserManage>  {
 
 // Step 2
@@ -39,16 +39,17 @@ class _UserManageState extends State<UserManage>  {
 
   @override
   Widget build(BuildContext context) {
-    Future <dynamic> getUsers() async{
-      QuerySnapshot querySnapshot = await _collectionRef.get();
 
-      // Get data from docs and convert map to List
-       allData = querySnapshot.docs.map((doc) => doc.data()).toList();
-      setState(() {
-
+    void fetchData()  {
+      DatabaseService.getUsers()
+          .then((users) {
+        setState(() {
+          allData = users;
+        });
       });
     }
-    getUsers();
+
+    fetchData();
 
 
     return Scaffold(

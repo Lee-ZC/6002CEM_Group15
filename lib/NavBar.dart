@@ -6,6 +6,7 @@ import 'package:trip_now/Pages/chat.dart';
 import 'package:trip_now/Pages/home.dart';
 import 'package:trip_now/Pages/profile.dart';
 import 'package:trip_now/Pages/wishlist.dart';
+import 'package:trip_now/database.dart';
 import 'main.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -35,34 +36,21 @@ class NBPage extends StatefulWidget {
 class _NBState extends State<NBPage> {
 
   var user = FirebaseAuth.instance.currentUser!;
-
+  final Uri _url = Uri.parse('https://flutter.dev');
+  String name="";
 
   @override
   Widget build(BuildContext context) {
+    void fetchData()  {
+      DatabaseService.getUserName(FirebaseAuth.instance.currentUser!.uid)
+          .then((result) {
+        setState(() {
+          name = result!;
+        });
+      });
+    }
 
-    var name="";
-
-    CollectionReference collection = FirebaseFirestore.instance.collection('Users') as CollectionReference<Object?>;
-
-    return     FutureBuilder<DocumentSnapshot>(
-      //Fetching data from the documentId specified of the student
-      future: collection.doc(FirebaseAuth.instance.currentUser!.uid ).get(),
-      builder:
-          (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-        //Error Handling conditions
-        if (snapshot.hasError) {
-          print("Something went wrong");
-        }
-
-        if (snapshot.hasData && !snapshot.data!.exists) {
-          print("Document does not exist");
-        }
-
-        //Data is output to the user
-        if (snapshot.connectionState == ConnectionState.done) {
-          Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
-          name=data['name'];
-        }
+    fetchData();
         return Align(
 
           alignment: Alignment.topLeft,
@@ -101,7 +89,7 @@ class _NBState extends State<NBPage> {
                 ListTile(
                   leading: Icon(Icons.chat),
                   title: Text('Customer Support'),
-                  onTap: () => Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=>chat_page())),
+                  onTap: (){},
                 ),
                 ListTile(
                   leading: Icon(Icons.person),
@@ -118,9 +106,11 @@ class _NBState extends State<NBPage> {
             ),
           ),
         );
-      },
 
-    );
+
+
 
   }
+
+
 }

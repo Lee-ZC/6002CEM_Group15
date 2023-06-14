@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:trip_now/database.dart';
 
 class EditProfilePage extends StatefulWidget {
   const EditProfilePage({
@@ -180,28 +181,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
   }
 
   void update() {
-    var collection = FirebaseFirestore.instance.collection('Users');
-    collection
-        .doc(FirebaseAuth.instance.currentUser?.uid.toString())
-        .update({
-      'name': nameController.text,
-      'email': emailController.text
-    }) // <-- Updated data
-        .then((_) => print('Success'))
-        .catchError((error) => print(error));
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => const Center(
-        child: CircularProgressIndicator(),
-      ),
-    );
-    FirebaseAuth.instance.currentUser
-        ?.updateEmail(emailController.text.toString().trim())
-        .then((value) => FirebaseAuth.instance.currentUser
-            ?.updatePassword(passwordController.text.toString().trim())).then((value) => FirebaseAuth.instance.signOut());
-
-
+    String name = nameController.text;
+    String email = emailController.text;
+    String userId = FirebaseAuth.instance.currentUser?.uid ?? '';
+    String password = passwordController.text;
+    DatabaseService.update(name: name, email: email, userId: userId, password: password, context: context);
 
   }
 }
