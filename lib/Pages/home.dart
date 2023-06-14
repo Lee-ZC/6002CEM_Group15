@@ -167,14 +167,20 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+
   List<DocumentSnapshot> _filterData(String searchQuery) {
     if (searchQuery.isEmpty) {
       return snapshotData ?? [];
     }
     return snapshotData!.where((doc) {
       dynamic hotelName = (doc?.data() as Map<String, dynamic>)?['name'];
+      dynamic hotelLocation = (doc?.data() as Map<String, dynamic>)?['Location'];
 
-      return hotelName.toLowerCase().contains(searchQuery.toLowerCase());
+      String hotelNameWithLocation = '$hotelName $hotelLocation';
+      return hotelNameWithLocation.toLowerCase().contains(searchQuery.toLowerCase());
     }).toList();
   }
+
+
+
 }

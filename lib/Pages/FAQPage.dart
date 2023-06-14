@@ -10,24 +10,24 @@ class FAQPage extends StatelessWidget {
       body: ListView(
         children: [
           FAQItem(
-            question: 'Question 1',
-            answer: 'Answer 1',
+            question: 'How do I create an account?',
+            answer: 'To create an account, simply click on the Sign Up button in the onBoarding and follow the prompts to provide your details',
           ),
           FAQItem(
-            question: 'Question 2',
-            answer: 'Answer 2',
+            question: 'How can I contact customer support?',
+            answer: 'You can reach our customer support team by clicking on the "Customer Support" section in the app. We provide multiple channels for communication, including live chat and phone support.',
           ),
           FAQItem(
-            question: 'Question 3',
-            answer: 'Answer 3',
+            question: 'How do I book a trip?',
+            answer: 'To book a trip, navigate to the appropriate section in the app (such as home page). Enter your travel details, including name, phone number and dates. Follow the prompts to complete the booking process.',
           ),
           FAQItem(
-            question: 'Question 4',
-            answer: 'Answer 4',
+            question: 'Are there any loyalty programs or rewards?',
+            answer: 'Some travel applications offer loyalty programs or partnerships with airlines, hotels, or other travel providers. Due to time constraint, in our application there is NO loyalty programs and rewards',
           ),
           FAQItem(
-            question: 'Question 5',
-            answer: 'Answer 5',
+            question: 'How do I cancel my booking?',
+            answer: 'If you need to cancel your booking, please go to the Customer Support section in the app and contact us, then our agent will assist you ',
           ),
           // Add more FAQ items as needed
         ],

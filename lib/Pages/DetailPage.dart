@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 //import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import '../api/notification_api.dart';
+
 
 class DetailPage extends StatefulWidget {
   //const DetailPage({Key? key}) : super(key: key);
@@ -264,32 +264,6 @@ class _DetailPageState extends State<DetailPage> {
                 ),
               ),
               SizedBox(height: 30.0),
-              // Text(
-              //   "Weather",
-              //   style: TextStyle(
-              //     fontSize: 18.0,
-              //     fontWeight: FontWeight.bold,
-              //   ),
-              // ),
-              // if (weatherData.isNotEmpty)
-              //   Column(
-              //     children: [
-              //       Text(
-              //         'Temperature: ${weatherData['main']['temp']}',
-              //         style: TextStyle(
-              //           fontSize: 16.0,
-              //           color: Colors.grey[600],
-              //         ),
-              //       ),
-              //       Text(
-              //         'Description: ${weatherData['weather'][0]['description']}',
-              //         style: TextStyle(
-              //           fontSize: 16.0,
-              //           color: Colors.grey[600],
-              //         ),
-              //       ),
-              //     ],
-              //   ),
               Text(
                 "Weather",
                 style: TextStyle(
