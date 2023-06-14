@@ -144,6 +144,7 @@ class _DetailPageState extends State<DetailPage> {
   // }
 
 
+
   Map<String, dynamic> weatherData = {};
 
   @override
@@ -181,7 +182,24 @@ class _DetailPageState extends State<DetailPage> {
       return '';
     }
   }
+  int totalPrice = 0;
 
+  DateTimeRange? pickedDateRange;
+
+  int calculateTotalPrice() {
+    if (pickedDateRange == null) {
+      return 0;
+    }
+
+    DateTimeRange selectedDateRange = pickedDateRange!;
+    int hotelPrice = int.tryParse(widget.post["Price"] ?? '') ?? 0;
+
+    int numberOfDays = selectedDateRange.end.difference(selectedDateRange.start).inDays;
+
+    int totalPrice = numberOfDays * hotelPrice;
+
+    return totalPrice;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -250,7 +268,7 @@ class _DetailPageState extends State<DetailPage> {
               ),
               SizedBox(height: 30.0),
               Text(
-                "Price",
+                "Price (MYR)",
                 style: TextStyle(
                   fontSize: 18.0,
                   fontWeight: FontWeight.bold,
@@ -340,131 +358,150 @@ class _DetailPageState extends State<DetailPage> {
                         builder: (context) => Dialog(
                           child: Container(
                             padding: EdgeInsets.all(16.0),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  "Book Hotel",
-                                  style: TextStyle(
-                                    fontSize: 20.0,
-                                    fontWeight: FontWeight.bold,
+                            child: SingleChildScrollView(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                    "Book Hotel",
+                                    style: TextStyle(
+                                      fontSize: 20.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                ),
-                                SizedBox(height: 16.0),
-                                _buildTextField(nameController, 'Guest Name'),
-                                SizedBox(height: 8.0),
-                                _buildTextField(phoneController, 'Phone'),
-                                SizedBox(height: 8.0),
-                                TextField(
-                                  controller: dateinput,
-                                  decoration: InputDecoration(
-                                    icon: Icon(Icons.calendar_today),
-                                    labelText: "Select Booking Date",
-                                  ),
-                                  readOnly: true,
-                                  onTap: () async {
-                                    DateTimeRange? pickedDateRange =
-                                    await showDateRangePicker(
-                                      context: context,
-                                      firstDate: DateTime(2000),
-                                      lastDate: DateTime(2025),
-                                    );
+                                  SizedBox(height: 16.0),
+                                  _buildTextField(nameController, 'Guest Name'),
+                                  SizedBox(height: 8.0),
+                                  _buildTextField(phoneController, 'Phone'),
+                                  SizedBox(height: 8.0),
+                                  TextField(
+                                    controller: dateinput,
+                                    decoration: InputDecoration(
+                                      icon: Icon(Icons.calendar_today),
+                                      labelText: "Select Booking Date",
+                                    ),
+                                    readOnly: true,
+                                    onTap: () async {
+                                      pickedDateRange = await showDateRangePicker(
+                                        context: context,
+                                        firstDate: DateTime(2000),
+                                        lastDate: DateTime(2025),
+                                      );
 
-                                    if (pickedDateRange != null) {
-                                      String formattedStartDate =
-                                      DateFormat('yyyy-MM-dd')
-                                          .format(pickedDateRange.start);
-                                      String formattedEndDate =
-                                      DateFormat('yyyy-MM-dd')
-                                          .format(pickedDateRange.end);
-                                      String formattedDateRange =
-                                          "$formattedStartDate to $formattedEndDate";
+                                      if (pickedDateRange != null) {
+                                        String formattedStartDate = DateFormat('yyyy-MM-dd').format(pickedDateRange!.start);
+                                        String formattedEndDate = DateFormat('yyyy-MM-dd').format(pickedDateRange!.end);
+                                        String formattedDateRange = "$formattedStartDate to $formattedEndDate";
 
-                                      setState(() {
-                                        dateinput.text = formattedDateRange;
-                                      });
-                                    } else {
-                                      print("Date range is not selected");
-                                    }
-                                  },
-                                ),
-
-                                SizedBox(height: 16.0),
-                                Align(
-                                  alignment: Alignment.center,
-                                  child: ElevatedButton(
-                                    onPressed: () {
-                                      if (nameController.text.isEmpty ||
-                                          phoneController.text.isEmpty ||
-                                          dateinput.text.isEmpty) {
-                                        showToast(
-                                            "Please fill in all the required fields.");
-                                      } else {
-                                        hotelToBook = {
-                                          "Guest name": nameController.text,
-                                          "Phone number": phoneController.text,
-                                          "Date": dateinput.text,
-                                          "Hotel name": widget.post["name"],
-                                          "Hotel Image": widget.post["ImageUrl"]
-                                        };
-                                        collectionReference
-                                            .doc(user.uid)
-                                            .collection('Booking-Hotel-List')
-                                            .add(hotelToBook)
-                                            .then((value) {
-                                          showDialog(
-                                            context: context,
-                                            builder: (context) => AlertDialog(
-                                              title: Text("Success"),
-                                              content: Text("Hotel booked successfully!"),
-                                              actions: [
-                                                TextButton(
-                                                  onPressed: () {
-                                                    Navigator.pop(context);
-                                                    Navigator.pop(context);
-                                                  },
-                                                  child: Text("OK"),
-                                                ),
-                                              ],
-                                            ),
-                                          );
-
-                                          // Schedule local notification
-                                          //scheduleLocalNotification();
-
-                                          // Clear text fields
-                                          nameController.clear();
-                                          phoneController.clear();
-                                          dateinput.clear();
-
-                                        }).catchError((error) {
-                                          showDialog(
-                                            context: context,
-                                            builder: (context) => AlertDialog(
-                                              title: Text("Error"),
-                                              content: Text("Failed to book the hotel. Please try again."),
-                                              actions: [
-                                                TextButton(
-                                                  onPressed: () => Navigator.pop(context),
-                                                  child: Text("OK"),
-                                                ),
-                                              ],
-                                            ),
-                                          );
+                                        setState(() {
+                                          dateinput.text = formattedDateRange;
+                                          totalPrice = calculateTotalPrice();
                                         });
+                                      } else {
+                                        print("Date range is not selected");
                                       }
                                     },
-                                    child: Text("Book Now"),
                                   ),
-                                ),
-                              ],
+                                  SizedBox(height: 16.0),
+                                  if (totalPrice > 0)
+                                    Text(
+                                      "Total Price: \$${totalPrice.toString()}",
+                                      style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+
+                                  SizedBox(height: 16.0),
+                                  Align(
+                                    alignment: Alignment.center,
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        if (nameController.text.isEmpty ||
+                                            phoneController.text.isEmpty ||
+                                            dateinput.text.isEmpty) {
+                                          showToast(
+                                              "Please fill in all the required fields.");
+                                        } else {
+                                          hotelToBook = {
+                                            "Guest name": nameController.text,
+                                            "Phone number": phoneController.text,
+                                            "Date": dateinput.text,
+                                            "Hotel name": widget.post["name"],
+                                            "Hotel Image": widget.post["ImageUrl"],
+                                            "Total Price": totalPrice.toString()
+                                          };
+                                          collectionReference
+                                              .doc(user.uid)
+                                              .collection('Booking-Hotel-List')
+                                              .add(hotelToBook)
+                                              .then((value) {
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) => AlertDialog(
+                                                title: Text("Success"),
+                                                content: Text("Hotel booked successfully!"),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () {
+                                                      Navigator.pop(context);
+                                                      Navigator.pop(context);
+                                                    },
+                                                    child: Text("OK"),
+                                                  ),
+                                                ],
+                                              ),
+                                            );
+
+                                            // Schedule local notification
+                                            //scheduleLocalNotification();
+
+                                            // Clear text fields
+                                            nameController.clear();
+                                            phoneController.clear();
+                                            dateinput.clear();
+                                            setState(() {
+                                              totalPrice = 0 ;
+                                            });
+
+
+                                          }).catchError((error) {
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) => AlertDialog(
+                                                title: Text("Error"),
+                                                content: Text("Failed to book the hotel. Please try again."),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () => Navigator.pop(context),
+                                                    child: Text("OK"),
+                                                  ),
+                                                ],
+                                              ),
+                                            );
+                                          });
+                                        }
+                                      },
+                                      child: Text("Book Now"),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
                       );
                     },
                   ),
+
+
+
+
+
+
+
+
                 ],
               ),
             ],

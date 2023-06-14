@@ -83,6 +83,15 @@ class _bookingHistoryState extends State<bookingHistory> {
                                   color: Colors.grey[700],
                                 ),
                               ),
+                              SizedBox(height: 8.0),
+                              Text(
+                                'Price(MYR): ${doc['Total Price']}',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.greenAccent[700],
+                                  fontWeight: FontWeight.bold
+                                ),
+                              ),
                             ],
                           ),
                         ),
