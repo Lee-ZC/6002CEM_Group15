@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:trip_now/Pages/userDetailsPage.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../NavBar.dart';
 
@@ -116,7 +117,16 @@ class _profile_pageState extends State<profile_page> {
               const SizedBox(height: 10,),
               InkWell(
                 onTap: () {
+                  Future <void> launchWhatsApp() async {
+                    final String phoneNumber = '60124596889';
+                    Uri url = Uri.parse('https://api.whatsapp.com/send/?phone=60124596889&text&type=phone_number&app_absent=0');
+                    if (!await launchUrl(launchUrl(Uri.parse('https://wa.me/$phoneNumber?text=Hi, I need help.'),
+                        mode: LaunchMode.externalApplication) as Uri)) {
+                      throw Exception('Could not launch $url');
+                    }
+                  }
 
+                  launchWhatsApp();
                   },
                 child: Container(
                   height: 50,
