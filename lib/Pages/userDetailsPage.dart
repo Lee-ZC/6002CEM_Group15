@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:trip_now/Pages/editProfilePage.dart';
+import 'package:trip_now/database.dart';
 
 import '../NavBar.dart';
 import '../sign_up.dart';
@@ -14,39 +15,33 @@ class UserDetailsPage extends StatefulWidget {
 }
 
 class _UserDetailsPageState extends State<UserDetailsPage> {
-  final _formKey = GlobalKey<FormState>();
   final user = FirebaseAuth.instance.currentUser!;
   var name = "";
   var email = "";
   var uid = "";
   bool edit = false;
-  CollectionReference collection = FirebaseFirestore.instance
-      .collection('Users') as CollectionReference<Object?>;
+
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<DocumentSnapshot>(
-      //Fetching data from the documentId specified of the student
-      future: collection.doc(FirebaseAuth.instance.currentUser!.uid).get(),
-      builder:
-          (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-        //Error Handling conditions
-        if (snapshot.hasError) {
-          print("Something went wrong");
-        }
+    void fetchData()  {
+      DatabaseService.getUserName(FirebaseAuth.instance.currentUser!.uid)
+          .then((result) {
+        setState(() {
+          name = result!;
+        });
+      });
+      DatabaseService.getEmail(FirebaseAuth.instance.currentUser!.uid)
+          .then((result) {
+        setState(() {
+          email = result!;
+        });
+      });
+      uid=FirebaseAuth.instance.currentUser!.uid;
+    }
 
-        if (snapshot.hasData && !snapshot.data!.exists) {
-          print("Document does not exist");
-        }
+    fetchData();
 
-        //Data is output to the user
-        if (snapshot.connectionState == ConnectionState.done) {
-          Map<String, dynamic> data =
-              snapshot.data!.data() as Map<String, dynamic>;
-          name = data['name'];
-          uid = data['uid'];
-          email = data['email'];
-        }
         return Scaffold(
           appBar: AppBar(
             title: const Text('Trip Now'),
@@ -166,9 +161,8 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
             ],
           ),
         );
-      },
-    );
+      }
+
   }
 
-  void update() {}
-}
+
