@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
+//import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import '../api/notification_api.dart';
 
@@ -105,6 +106,42 @@ class _DetailPageState extends State<DetailPage> {
       fontSize: 16.0,
     );
   }
+
+
+  // FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+  // FlutterLocalNotificationsPlugin();
+  //
+  // void initializeNotifications() async {
+  //   const AndroidInitializationSettings initializationSettingsAndroid =
+  //   AndroidInitializationSettings('app_icon');
+  //   final InitializationSettings initializationSettings =
+  //   InitializationSettings(android: initializationSettingsAndroid);
+  //
+  //   await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+  // }
+  //
+  //
+  // Future<void> scheduleLocalNotification() async {
+  //   const AndroidNotificationDetails androidPlatformChannelSpecifics =
+  //   AndroidNotificationDetails(
+  //     'channel_id',
+  //     'channel_name',
+  //     'channel_description',
+  //     importance: Importance.max,
+  //     priority: Priority.high,
+  //   );
+  //   const NotificationDetails platformChannelSpecifics =
+  //   NotificationDetails(android: androidPlatformChannelSpecifics);
+  //
+  //   await flutterLocalNotificationsPlugin.show(
+  //     0,
+  //     'Hotel Booked',
+  //     'Hotel booked successfully!',
+  //     platformChannelSpecifics,
+  //     payload: 'notification_payload',
+  //   );
+  // }
+
 
 
 
@@ -309,6 +346,9 @@ class _DetailPageState extends State<DetailPage> {
                                               ],
                                             ),
                                           );
+
+                                          // Schedule local notification
+                                          //scheduleLocalNotification();
 
                                           // Clear text fields
                                           nameController.clear();
