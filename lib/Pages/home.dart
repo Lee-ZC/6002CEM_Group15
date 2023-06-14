@@ -49,7 +49,7 @@ class _HomePageState extends State<HomePage> {
                 });
               },
               decoration: InputDecoration(
-                labelText: 'Search',
+                labelText: 'Search by city, country or hotel name',
                 prefixIcon: Icon(Icons.search),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8.0),
