@@ -2,15 +2,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class DatabaseService {
-  final String uid;
 
-  DatabaseService({required this.uid});
+  static Future <List> getUsers() async{
+    CollectionReference _collectionRef = FirebaseFirestore.instance.collection('Users');
 
-  final CollectionReference userCollection =
-  FirebaseFirestore.instance.collection('Users');
+    QuerySnapshot querySnapshot = await _collectionRef.get();
 
-  Future deleteuser() {
+    // Get data from docs and convert map to List
+    return querySnapshot.docs.map((doc) => doc.data()).toList();
 
-    return userCollection.doc(uid).delete();
-  }
+
+    }
+
 }

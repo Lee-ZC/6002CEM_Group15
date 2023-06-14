@@ -14,7 +14,7 @@ class profile_page extends StatefulWidget {
 
 class _profile_pageState extends State<profile_page> {
   final user = FirebaseAuth.instance.currentUser!;
-  var name = null;
+  var name="";
   CollectionReference collection = FirebaseFirestore.instance
       .collection('Users') as CollectionReference<Object?>;
 

@@ -1,31 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
-class User {
+class CurrentUser {
   final String id;
   final String name;
   final String email;
 
-  User({required this.id, required this.name, required this.email});
-
-  final user = FirebaseAuth.instance.currentUser!;
-
-  String? getUID() {
-    final String? uid = user?.uid.toString();
-
-    return uid;
-  }
-
-  String? getUName() {
-    final String? uname = user?.displayName.toString();
-
-    return uname;
-  }
-
-  String? getUEmail() {
-    final String? uemail = user?.email.toString();
-
-    return uemail;
-  }
+  CurrentUser({required this.id, required this.name, required this.email });
 
 
 

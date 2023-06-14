@@ -40,7 +40,8 @@ class _NBState extends State<NBPage> {
   @override
   Widget build(BuildContext context) {
 
-    var name=null;
+    var name="";
+
     CollectionReference collection = FirebaseFirestore.instance.collection('Users') as CollectionReference<Object?>;
 
     return     FutureBuilder<DocumentSnapshot>(
@@ -63,6 +64,7 @@ class _NBState extends State<NBPage> {
           name=data['name'];
         }
         return Align(
+
           alignment: Alignment.topLeft,
           widthFactor: 0.7,
           child: Drawer(

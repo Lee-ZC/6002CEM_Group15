@@ -2,8 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:trip_now/database.dart';
 
-class UserManage extends StatefulWidget {
+
+class UserManage extends StatefulWidget{
 
   const UserManage({Key? key}) : super(key: key);
 
@@ -12,7 +14,8 @@ class UserManage extends StatefulWidget {
 
 }
 List allData=[];
-class _UserManageState extends State<UserManage> {
+class _UserManageState extends State<UserManage>  {
+
 // Step 2
   void initState() {
     super.initState();
@@ -46,6 +49,8 @@ class _UserManageState extends State<UserManage> {
       });
     }
     getUsers();
+
+
     return Scaffold(
           appBar: AppBar(title: Text('Trip Now: Admin'),),
       body: Container(
@@ -121,5 +126,7 @@ class _UserManageState extends State<UserManage> {
         );
 
   }
+
+
 
 }

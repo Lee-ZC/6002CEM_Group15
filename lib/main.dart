@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:trip_now/Pages/onboardingPage.dart';
 import 'package:trip_now/Pages/home.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:trip_now/model/user.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
