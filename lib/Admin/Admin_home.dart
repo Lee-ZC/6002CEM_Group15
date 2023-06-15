@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:trip_now/Admin/Manage_Hotel.dart';
 import 'package:trip_now/Admin/userManage.dart';
@@ -5,12 +6,6 @@ import 'package:trip_now/main.dart';
 import 'package:trip_now/login.dart';
 
 
-
-// void main(List<String> args) {
-//   runApp(new MaterialApp(
-//     home: MyAdminApp(),
-//   ));
-// }
 
 
 class MyAdminApp extends StatefulWidget {
@@ -99,7 +94,7 @@ class _MyAdminAppState extends State<MyAdminApp> {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => Login()));
+                FirebaseAuth.instance.signOut();
               },
               child: Card(
                 shape: RoundedRectangleBorder(
