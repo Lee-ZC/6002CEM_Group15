@@ -7,6 +7,8 @@ import 'package:trip_now/Pages/home.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:trip_now/model/user.dart';
 
+import 'Admin/Admin_home.dart';
+
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -61,22 +63,31 @@ class _MainPageState extends State<MainPage> {
     );
   }
 }
+
+
+
 class SecondScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: StreamBuilder <User?> (
+      body: StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (context,snapshot){
-          if(snapshot.hasData){
-            return const HomePage();
-          }else{
-            return const OnBoardingPage();
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            final user = snapshot.data!;
+            if (user.email == 'admin@gmail.com') {
+              return MyAdminApp(); // Navigate to the admin page
+            } else {
+              return const HomePage(); // Navigate to the regular user page
+            }
+          } else {
+            return const OnBoardingPage(); // Navigate to the onboarding page or login page
           }
-        }
+        },
       ),
     );
   }
 }
+
 
 

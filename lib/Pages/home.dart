@@ -2,11 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:trip_now/Pages/wishlist.dart';
-
 import '../NavBar.dart';
 import '../model/hotel.dart';
 import 'DetailPage.dart';
-import 'chat.dart';
+
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

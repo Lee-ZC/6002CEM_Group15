@@ -134,21 +134,6 @@ class _LoginState extends State<Login> {
                           );
                         },
                       ),
-
-                      Container(
-                        height: 80,
-                        width: 150,
-                        padding: const EdgeInsets.all(20),
-                        child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              minimumSize: const Size.fromHeight(50),
-                            ),
-                            child: const Text('Admin'),
-                            onPressed: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => MyAdminApp()));
-                            }),
-                      ),
                     ],
                   ),
                 ),
@@ -181,8 +166,6 @@ class _LoginState extends State<Login> {
 
 
       navigatorKey.currentState!.popUntil((route) => route.isFirst);
-
-
 
   }
 }
