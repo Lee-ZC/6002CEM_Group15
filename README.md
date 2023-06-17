@@ -6,5 +6,5 @@ The trip_now application is a versatile platform designed to simplify the proces
 
 ## Videocast
 
-Youtube link : https://www.youtube.com/watch?v=HCq1OcAEAm0&list=RDHCq1OcAEAm0&start_radio=1&ab_channel=TheVibeGuide
+Youtube link : [https://www.youtube.com/watch?v=HCq1OcAEAm0&list=RDHCq1OcAEAm0&start_radio=1&ab_channel=TheVibeGuide](https://youtu.be/7IEehL8sroE)
 
